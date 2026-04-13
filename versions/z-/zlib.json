@@ -1,0 +1,9 @@
+{
+  "versions": [
+    {
+      "version-string": "quiche-pinned-f9dd600",
+      "port-version": 0,
+      "git-tree": "<git rev-parse HEAD:ports/zlib>"
+    }
+  ]
+}

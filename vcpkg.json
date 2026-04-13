@@ -1,0 +1,13 @@
+{
+  "name": "quiche",
+  "version": "0.1.0",
+  "description": "QUIC/HTTP3 library based on Chromium's QUICHE",
+  "homepage": "https://github.com/carbon-os/libquiche",
+  "license": "BSD-3-Clause",
+  "dependencies": [
+    "abseil-cpp",
+    "boringssl",
+    "protobuf",
+    "zlib"
+  ]
+}

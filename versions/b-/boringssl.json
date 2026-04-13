@@ -1,0 +1,9 @@
+{
+  "versions": [
+    {
+      "version-string": "quiche-pinned-94c4c7f",
+      "port-version": 0,
+      "git-tree": "<git rev-parse HEAD:ports/boringssl>"
+    }
+  ]
+}

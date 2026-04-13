@@ -1,0 +1,9 @@
+{
+  "default": {
+    "quiche":     { "baseline": "0.1.0",                 "port-version": 0 },
+    "abseil-cpp": { "baseline": "quiche-pinned-d407ef1", "port-version": 0 },
+    "boringssl":  { "baseline": "quiche-pinned-94c4c7f", "port-version": 0 },
+    "protobuf":   { "baseline": "quiche-pinned-a79f2d2", "port-version": 0 },
+    "zlib":       { "baseline": "quiche-pinned-f9dd600", "port-version": 0 }
+  }
+}

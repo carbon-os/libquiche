@@ -1,0 +1,8 @@
+{
+  "name": "boringssl",
+  "version-string": "quiche-pinned-94c4c7f",
+  "dependencies": [
+    { "name": "vcpkg-cmake", "host": true },
+    { "name": "vcpkg-cmake-config", "host": true }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "protobuf",
+  "version-string": "quiche-pinned-a79f2d2",
+  "dependencies": [
+    "abseil-cpp",
+    "zlib",
+    { "name": "vcpkg-cmake", "host": true },
+    { "name": "vcpkg-cmake-config", "host": true }
+  ]
+}
