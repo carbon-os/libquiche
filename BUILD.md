@@ -166,9 +166,18 @@ vcpkg-configuration.json
     {
       "kind": "git",
       "repository": "https://github.com/carbon-os/libquiche",
-      "baseline": "0f9da6d26681a7c2ad902197817bc7ece71dab2f",
+      "baseline": "fe1090d23cc6fb772983590009decf6d9a1496bd",
       "packages": ["quiche", "abseil-cpp", "boringssl", "protobuf", "zlib"]
     }
+  ]
+}
+
+vcpkg.json
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "dependencies": [
+    "quiche"
   ]
 }
 ```
