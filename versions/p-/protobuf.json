@@ -3,7 +3,7 @@
     {
       "version-string": "quiche-pinned-a79f2d2",
       "port-version": 0,
-      "git-tree": "<git rev-parse HEAD:ports/protobuf>"
+      "git-tree": "d46946733c6ca27a93d17378e10688e97438d00e"
     }
   ]
 }

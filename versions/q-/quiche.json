@@ -3,7 +3,7 @@
     {
       "version": "0.1.0",
       "port-version": 0,
-      "git-tree": "<git rev-parse HEAD:ports/quiche>"
+      "git-tree": "c6ac760c144e929fc4317b199239e90d7a6a3c44"
     }
   ]
 }

@@ -3,7 +3,7 @@
     {
       "version-string": "quiche-pinned-94c4c7f",
       "port-version": 0,
-      "git-tree": "<git rev-parse HEAD:ports/boringssl>"
+      "git-tree": "fb103549e2124374d968cfd9f51599dba24f386e"
     }
   ]
 }

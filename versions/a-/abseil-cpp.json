@@ -3,7 +3,7 @@
     {
       "version-string": "quiche-pinned-d407ef1",
       "port-version": 0,
-      "git-tree": "<git rev-parse HEAD:ports/abseil-cpp>"
+      "git-tree": "76d15e9b53ff9609d0f3dd4c9d6414786349572e"
     }
   ]
 }
