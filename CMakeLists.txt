@@ -132,8 +132,17 @@ install(TARGETS quiche
     RUNTIME DESTINATION bin
 )
 
+# Install the platform directory but exclude the original and patched implementation folders
 install(DIRECTORY platform/
     DESTINATION include
+    FILES_MATCHING PATTERN "*.h"
+    PATTERN "quiche_platform_impl" EXCLUDE
+    PATTERN "quiche_platform_impl_vcpkg" EXCLUDE
+)
+
+# Install the patched vcpkg implementation folder as the new quiche_platform_impl
+install(DIRECTORY platform/quiche_platform_impl_vcpkg/
+    DESTINATION include/quiche_platform_impl
     FILES_MATCHING PATTERN "*.h"
 )
 
