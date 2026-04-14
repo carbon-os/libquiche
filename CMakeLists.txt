@@ -125,3 +125,29 @@ target_link_libraries(quiche
     crypto
     ZLIB::ZLIB
 )
+
+install(TARGETS quiche
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY platform/
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.h"
+)
+
+install(DIRECTORY third_party/quiche/
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.h"
+)
+
+install(DIRECTORY third_party/abseil-cpp/
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.h"
+)
+
+install(DIRECTORY third_party/boringssl/src/include/
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.h"
+)
