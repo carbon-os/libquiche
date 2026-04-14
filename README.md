@@ -83,7 +83,7 @@ Add a `vcpkg-configuration.json` to your project root pointing to the libquiche 
     {
       "kind": "git",
       "repository": "https://github.com/carbon-os/libquiche",
-      "baseline": "76531099624c3d047744041e22b69a1a30b68430",
+      "baseline": "032f24a83fa22d5a7cd9b51bb7cdbea2e21f496f",
       "packages": ["quiche", "abseil-cpp", "boringssl", "protobuf", "zlib"]
     }
   ]
