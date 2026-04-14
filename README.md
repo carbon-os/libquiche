@@ -1,14 +1,14 @@
 # libquiche
 
-A cross-platform static library build of Google's QUIC implementation ([QUICHE](https://github.com/google/quiche)), with all dependencies pinned and managed via self-contained vcpkg overlay ports.
+A cross-platform static library build of Google's QUIC implementation ([QUICHE](https://github.com/google/quiche)), distributed as a vcpkg registry package with all dependencies pinned and versioned.
 
 ---
 
 ## Features
 
 - C++20 static library targeting Linux, macOS, and Windows
-- All dependencies pinned to known-good commits via overlay ports
-- No system-level dependency installation required (except ICU on Linux)
+- Installable via vcpkg registry — no manual port cloning required
+- All dependencies pinned to known-good commits
 - Protobuf code generation handled automatically at configure time
 
 ---
@@ -52,16 +52,11 @@ sudo dnf install libicu-devel # Fedora/RHEL
 
 ---
 
-## Build
+## Usage
 
-### 1. Clone
+### 1. Bootstrap vcpkg
 
-```bash
-git clone https://github.com/carbon-os/libquiche.git
-cd libquiche
-```
-
-### 2. Bootstrap vcpkg
+In your project root, clone vcpkg if you haven't already:
 
 ```bash
 git clone https://github.com/microsoft/vcpkg.git
@@ -73,85 +68,83 @@ git clone https://github.com/microsoft/vcpkg.git
 .\vcpkg\bootstrap-vcpkg.bat
 ```
 
-### 3. Install Dependencies
+### 2. Configure the Registry
+
+Add a `vcpkg-configuration.json` to your project root pointing to the libquiche registry:
+
+```json
+{
+  "default-registry": {
+    "kind": "git",
+    "repository": "https://github.com/microsoft/vcpkg",
+    "baseline": "3508985146f1b1d248c67ead13f8f54be5b4f5da"
+  },
+  "registries": [
+    {
+      "kind": "git",
+      "repository": "https://github.com/carbon-os/libquiche",
+      "baseline": "76531099624c3d047744041e22b69a1a30b68430",
+      "packages": ["quiche", "abseil-cpp", "boringssl", "protobuf", "zlib"]
+    }
+  ]
+}
+```
+
+### 3. Declare the Dependency
+
+Add a `vcpkg.json` manifest to your project root:
+
+```json
+{
+  "name": "your-app",
+  "version": "1.0.0",
+  "dependencies": [
+    "quiche"
+  ]
+}
+```
+
+### 4. Install Dependencies
 
 ```bash
 # Linux/macOS
-./vcpkg/vcpkg install --overlay-ports=./ports
+./vcpkg/vcpkg install
 
 # Windows
-.\vcpkg\vcpkg.exe install --overlay-ports=.\ports
+.\vcpkg\vcpkg.exe install
 ```
 
-### 4. Configure
+### 5. Configure Your Project
 
 **Linux / macOS**
 ```bash
 cmake -B build \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake \
-  -DVCPKG_OVERLAY_PORTS=./ports
+  -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake
 ```
 
 **Windows**
 ```bat
 cmake -B build ^
   -G "Visual Studio 17 2022" -A x64 ^
-  -DCMAKE_TOOLCHAIN_FILE=.\vcpkg\scripts\buildsystems\vcpkg.cmake ^
-  -DVCPKG_OVERLAY_PORTS=.\ports
+  -DCMAKE_TOOLCHAIN_FILE=.\vcpkg\scripts\buildsystems\vcpkg.cmake
 ```
 
-### 5. Build
+### 6. Build
 
 ```bash
 cmake --build build --config Release
-```
-
-### Output
-
-```
-build/libquiche.a        # Linux/macOS
-build\Release\quiche.lib # Windows
 ```
 
 ---
 
 ## Linking Against libquiche
 
-**Via find_package:**
+In your `CMakeLists.txt`:
+
 ```cmake
 find_package(quiche REQUIRED)
 target_link_libraries(your_target PRIVATE quiche)
-```
-
-**Manually:**
-```cmake
-target_include_directories(your_target PRIVATE /path/to/libquiche)
-target_link_libraries(your_target PRIVATE /path/to/libquiche/build/libquiche.a)
-```
-
----
-
-## Directory Structure
-
-```
-libquiche/
-├── CMakeLists.txt
-├── sources.cmake
-├── vcpkg.json
-├── vcpkg/                  # self-contained vcpkg — do not move
-├── ports/                  # pinned overlay ports for all deps
-│   ├── abseil-cpp/
-│   ├── boringssl/
-│   ├── googleurl/
-│   ├── protobuf/
-│   └── zlib/
-├── platform/
-│   ├── icufix/
-│   ├── quiche/
-│   └── quiche_platform_impl/
-└── third_party/
-    └── quiche/
 ```
 
 ---
@@ -160,10 +153,11 @@ libquiche/
 
 | Problem | Fix |
 |---|---|
-| `vcpkg: command not found` | Run `bootstrap-vcpkg.sh` first from the repo root |
-| `Could not find absl` | Confirm `--overlay-ports=./ports` is passed and `vcpkg install` completed cleanly |
+| `vcpkg: command not found` | Run `bootstrap-vcpkg.sh` first from your project root |
+| `Could not find absl` | Confirm `vcpkg install` completed cleanly and the registry baseline is reachable |
+| Registry resolution failure | Ensure `vcpkg-configuration.json` is in the same directory as `vcpkg.json` |
 | `ICU not found` on Linux | Run `sudo apt install libicu-dev` |
-| Protoc missing at codegen step | Ensure the protobuf port built successfully — check `./vcpkg/buildtrees/protobuf` for errors |
+| Protoc missing at codegen step | Ensure the protobuf package built successfully — check `./vcpkg/buildtrees/protobuf` for errors |
 | MSVC iterator debug mismatch | All deps must build with `/D_ITERATOR_DEBUG_LEVEL=0` — wipe `./vcpkg/buildtrees` and reinstall |
 | macOS arch mismatch (M1/Intel) | Do not set `CMAKE_OSX_ARCHITECTURES` manually — the protobuf port detects this via `uname -m` |
 
